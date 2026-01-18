@@ -15,6 +15,15 @@ document.addEventListener('DOMContentLoaded', function() {
   // Initialize active section highlighting
   initActiveSectionHighlighting();
   
+  // Initialize gallery lightbox
+  initGalleryLightbox();
+  
+  // Initialize contact form
+  initContactForm();
+  
+  // Set current year in footer
+  setCurrentYear();
+  
   // Additional initialization will be added in subsequent tasks
 });
 
@@ -134,4 +143,402 @@ function updateActiveNavLink() {
       link.classList.add('active');
     }
   });
+}
+
+/**
+ * Initialize gallery lightbox functionality
+ * Handles gallery image clicks and opens modal with enlarged image
+ * Supports keyboard navigation (Escape to close, Enter/Space to open)
+ * Also handles horizontal carousel navigation with arrows
+ */
+function initGalleryLightbox() {
+  // Get all gallery images
+  const galleryImages = document.querySelectorAll('.gallery-item img');
+  const modalImage = document.getElementById('modalImage');
+  const galleryModal = document.getElementById('galleryModal');
+  
+  if (!modalImage || !galleryModal) {
+    console.warn('Gallery modal elements not found');
+    return;
+  }
+  
+  // Add click event listeners to all gallery images
+  galleryImages.forEach(img => {
+    // Make images keyboard accessible
+    img.setAttribute('tabindex', '0');
+    img.setAttribute('role', 'button');
+    
+    // Click handler
+    img.addEventListener('click', function() {
+      openGalleryModal(this, modalImage);
+    });
+    
+    // Keyboard handler (Enter or Space key)
+    img.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openGalleryModal(this, modalImage);
+        
+        // Open the modal using Bootstrap's API
+        const modal = new bootstrap.Modal(galleryModal);
+        modal.show();
+      }
+    });
+  });
+  
+  // Add keyboard support for closing modal with Escape key
+  galleryModal.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      const modal = bootstrap.Modal.getInstance(galleryModal);
+      if (modal) {
+        modal.hide();
+      }
+    }
+  });
+  
+  // Clear modal image when modal is hidden (cleanup)
+  galleryModal.addEventListener('hidden.bs.modal', function() {
+    modalImage.setAttribute('src', '');
+    modalImage.setAttribute('alt', '');
+  });
+  
+  // Focus management: return focus to trigger element when modal closes
+  let lastFocusedElement = null;
+  
+  galleryModal.addEventListener('show.bs.modal', function() {
+    lastFocusedElement = document.activeElement;
+  });
+  
+  galleryModal.addEventListener('hidden.bs.modal', function() {
+    if (lastFocusedElement) {
+      lastFocusedElement.focus();
+    }
+  });
+  
+  // Initialize carousel navigation
+  initGalleryCarousel();
+}
+
+/**
+ * Open gallery modal with specified image
+ * @param {HTMLImageElement} imgElement - The image element that was clicked
+ * @param {HTMLImageElement} modalImage - The modal image element to update
+ */
+function openGalleryModal(imgElement, modalImage) {
+  // Get image source and alt text from data attributes
+  const imageSrc = imgElement.getAttribute('data-image');
+  const imageAlt = imgElement.getAttribute('alt');
+  
+  // Update modal image
+  if (imageSrc) {
+    modalImage.setAttribute('src', imageSrc);
+    modalImage.setAttribute('alt', imageAlt || 'Gallery image');
+  }
+}
+
+/**
+ * Initialize gallery carousel navigation with arrow buttons
+ */
+function initGalleryCarousel() {
+  const galleryTrack = document.querySelector('.gallery-track');
+  const prevButton = document.querySelector('.gallery-arrow-prev');
+  const nextButton = document.querySelector('.gallery-arrow-next');
+  
+  if (!galleryTrack || !prevButton || !nextButton) {
+    console.warn('Gallery carousel elements not found');
+    return;
+  }
+  
+  // Scroll amount (one item width + gap)
+  const scrollAmount = 400 + 24; // item width + gap
+  
+  // Previous button click handler
+  prevButton.addEventListener('click', function() {
+    scrollGallery(-scrollAmount);
+  });
+  
+  // Previous button keyboard handler
+  prevButton.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      scrollGallery(-scrollAmount);
+    }
+  });
+  
+  // Next button click handler
+  nextButton.addEventListener('click', function() {
+    scrollGallery(scrollAmount);
+  });
+  
+  // Next button keyboard handler
+  nextButton.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      scrollGallery(scrollAmount);
+    }
+  });
+  
+  // Scroll function
+  function scrollGallery(amount) {
+    galleryTrack.scrollBy({
+      left: amount,
+      behavior: 'smooth'
+    });
+  }
+  
+  // Optional: Hide/show arrows based on scroll position
+  function updateArrowVisibility() {
+    const scrollLeft = galleryTrack.scrollLeft;
+    const maxScroll = galleryTrack.scrollWidth - galleryTrack.clientWidth;
+    
+    // Update prev arrow state
+    if (scrollLeft <= 0) {
+      prevButton.style.opacity = '0.5';
+      prevButton.style.cursor = 'default';
+      prevButton.setAttribute('aria-disabled', 'true');
+    } else {
+      prevButton.style.opacity = '1';
+      prevButton.style.cursor = 'pointer';
+      prevButton.setAttribute('aria-disabled', 'false');
+    }
+    
+    // Update next arrow state
+    if (scrollLeft >= maxScroll - 5) { // -5 for tolerance
+      nextButton.style.opacity = '0.5';
+      nextButton.style.cursor = 'default';
+      nextButton.setAttribute('aria-disabled', 'true');
+    } else {
+      nextButton.style.opacity = '1';
+      nextButton.style.cursor = 'pointer';
+      nextButton.setAttribute('aria-disabled', 'false');
+    }
+  }
+  
+  // Update arrow visibility on scroll
+  galleryTrack.addEventListener('scroll', updateArrowVisibility);
+  
+  // Initial arrow visibility check
+  updateArrowVisibility();
+  
+  // Update on window resize
+  window.addEventListener('resize', updateArrowVisibility);
+  
+  // Add keyboard navigation for gallery track (arrow keys)
+  galleryTrack.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      scrollGallery(-scrollAmount);
+    } else if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      scrollGallery(scrollAmount);
+    }
+  });
+}
+
+/**
+ * Initialize contact form validation and submission
+ * Handles form validation, submission via Formspree, and user feedback
+ */
+function initContactForm() {
+  const form = document.getElementById('contactForm');
+  const formStatus = document.getElementById('formStatus');
+  
+  if (!form || !formStatus) {
+    console.warn('Contact form elements not found');
+    return;
+  }
+  
+  // Add form submit event listener
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    // Validate form
+    if (!validateForm(form)) {
+      return;
+    }
+    
+    // If validation passes, submit the form
+    await submitForm(form, formStatus);
+  });
+  
+  // Add real-time validation on blur for better UX
+  const formInputs = form.querySelectorAll('input, textarea');
+  formInputs.forEach(input => {
+    input.addEventListener('blur', function() {
+      validateField(this);
+    });
+    
+    // Clear validation state on input
+    input.addEventListener('input', function() {
+      if (this.classList.contains('is-invalid')) {
+        this.classList.remove('is-invalid');
+      }
+    });
+  });
+}
+
+/**
+ * Validate entire form
+ * @param {HTMLFormElement} form - The form to validate
+ * @returns {boolean} - True if form is valid, false otherwise
+ */
+function validateForm(form) {
+  let isValid = true;
+  
+  // Get all required fields
+  const nameInput = form.querySelector('#name');
+  const emailInput = form.querySelector('#email');
+  const messageInput = form.querySelector('#message');
+  
+  // Validate name field
+  if (!validateField(nameInput)) {
+    isValid = false;
+  }
+  
+  // Validate email field
+  if (!validateField(emailInput)) {
+    isValid = false;
+  }
+  
+  // Validate message field
+  if (!validateField(messageInput)) {
+    isValid = false;
+  }
+  
+  // Add Bootstrap validation class to form
+  form.classList.add('was-validated');
+  
+  return isValid;
+}
+
+/**
+ * Validate individual form field
+ * @param {HTMLInputElement|HTMLTextAreaElement} field - The field to validate
+ * @returns {boolean} - True if field is valid, false otherwise
+ */
+function validateField(field) {
+  if (!field) return true;
+  
+  // Check if field is required and empty
+  if (field.hasAttribute('required') && !field.value.trim()) {
+    field.classList.add('is-invalid');
+    field.classList.remove('is-valid');
+    return false;
+  }
+  
+  // Validate email format
+  if (field.type === 'email' && field.value.trim()) {
+    if (!validateEmail(field.value.trim())) {
+      field.classList.add('is-invalid');
+      field.classList.remove('is-valid');
+      return false;
+    }
+  }
+  
+  // Field is valid
+  field.classList.remove('is-invalid');
+  field.classList.add('is-valid');
+  return true;
+}
+
+/**
+ * Validate email format using regex
+ * @param {string} email - The email address to validate
+ * @returns {boolean} - True if email is valid, false otherwise
+ */
+function validateEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+/**
+ * Submit form via Formspree
+ * @param {HTMLFormElement} form - The form to submit
+ * @param {HTMLElement} statusElement - Element to display status messages
+ */
+async function submitForm(form, statusElement) {
+  // Show loading state
+  const submitButton = form.querySelector('button[type="submit"]');
+  const originalButtonText = submitButton.textContent;
+  submitButton.disabled = true;
+  submitButton.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Sending...';
+  
+  // Clear previous status messages
+  statusElement.innerHTML = '';
+  
+  try {
+    // Get form data
+    const formData = new FormData(form);
+    
+    // Submit to Formspree
+    const response = await fetch(form.action, {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+    
+    if (response.ok) {
+      // Success
+      displaySuccessMessage(statusElement);
+      form.reset();
+      form.classList.remove('was-validated');
+      
+      // Clear validation classes
+      const formInputs = form.querySelectorAll('input, textarea');
+      formInputs.forEach(input => {
+        input.classList.remove('is-valid', 'is-invalid');
+      });
+    } else {
+      // Error response from server
+      displayErrorMessage(statusElement);
+    }
+  } catch (error) {
+    // Network or other error
+    console.error('Form submission error:', error);
+    displayErrorMessage(statusElement);
+  } finally {
+    // Restore button state
+    submitButton.disabled = false;
+    submitButton.textContent = originalButtonText;
+  }
+}
+
+/**
+ * Display success message to user
+ * @param {HTMLElement} statusElement - Element to display message in
+ */
+function displaySuccessMessage(statusElement) {
+  statusElement.innerHTML = `
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <i class="bi bi-check-circle-fill me-2"></i>
+      <strong>Thank you!</strong> Your message has been sent successfully. I'll get back to you soon!
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  `;
+}
+
+/**
+ * Display error message to user
+ * @param {HTMLElement} statusElement - Element to display message in
+ */
+function displayErrorMessage(statusElement) {
+  statusElement.innerHTML = `
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <i class="bi bi-exclamation-triangle-fill me-2"></i>
+      <strong>Oops!</strong> There was a problem sending your message. Please try again or contact me directly via email.
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  `;
+}
+
+/**
+ * Set current year in footer copyright
+ */
+function setCurrentYear() {
+  const yearElement = document.getElementById('currentYear');
+  if (yearElement) {
+    yearElement.textContent = new Date().getFullYear();
+  }
 }

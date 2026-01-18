@@ -76,8 +76,8 @@ This implementation plan breaks down the static website development into discret
     - Test CTA buttons link to correct sections
     - _Requirements: 3.3_
 
-- [-] 4. Implement services section
-  - [ ] 4.1 Create services section HTML structure
+- [x] 4. Implement services section
+  - [x] 4.1 Create services section HTML structure
     - Create section container with heading
     - Build two service cards using Bootstrap card component
     - Add sport coaching service card with icon, title, description, features
@@ -85,7 +85,7 @@ This implementation plan breaks down the static website development into discret
     - Implement responsive grid layout (2 columns desktop, 1 column mobile)
     - _Requirements: 4.1, 4.2, 4.3, 4.5_
 
-  - [ ] 4.2 Style service cards with custom CSS
+  - [x] 4.2 Style service cards with custom CSS
     - Apply color scheme to card elements
     - Add hover effects to cards
     - Style service icons
@@ -106,8 +106,8 @@ This implementation plan breaks down the static website development into discret
     - Test responsive grid layout classes
     - _Requirements: 4.1, 4.2_
 
-- [ ] 5. Build about section
-  - [ ] 5.1 Create about section HTML structure
+- [x] 5. Build about section
+  - [x] 5.1 Create about section HTML structure
     - Create section container with heading
     - Build two-column layout (image and text)
     - Add professional photo with proper alt text
@@ -117,7 +117,7 @@ This implementation plan breaks down the static website development into discret
     - Implement responsive layout (stacks on mobile)
     - _Requirements: 5.1, 5.2, 5.3, 5.4, 12.2_
 
-  - [ ] 5.2 Style about section with custom CSS
+  - [x] 5.2 Style about section with custom CSS
     - Style image with rounded corners
     - Apply typography hierarchy
     - Add spacing and alignment
@@ -133,8 +133,8 @@ This implementation plan breaks down the static website development into discret
 - [ ] 6. Checkpoint - Ensure all tests pass
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 7. Implement gallery section
-  - [ ] 7.1 Create gallery HTML structure
+- [x] 7. Implement gallery section
+  - [x] 7.1 Create gallery HTML structure
     - Create section container with heading
     - Build responsive grid layout for images
     - Add gallery images with proper alt text
@@ -142,19 +142,19 @@ This implementation plan breaks down the static website development into discret
     - Add data attributes for lightbox functionality
     - _Requirements: 6.1, 6.2, 6.4, 12.2_
 
-  - [ ] 7.2 Create lightbox modal for image viewing
+  - [x] 7.2 Create lightbox modal for image viewing
     - Build Bootstrap modal for enlarged image display
     - Add modal structure with image container
     - _Requirements: 6.3_
 
-  - [ ] 7.3 Implement gallery JavaScript functionality
+  - [x] 7.3 Implement gallery JavaScript functionality
     - Write function to handle gallery image clicks
     - Implement lightbox opening with correct image
     - Update modal image source and alt text dynamically
     - Add keyboard support (Escape to close)
     - _Requirements: 6.3, 12.4_
 
-  - [ ] 7.4 Style gallery with custom CSS
+  - [x] 7.4 Style gallery with custom CSS
     - Add hover effects to gallery images
     - Style responsive grid layout
     - Add spacing between images
@@ -172,8 +172,8 @@ This implementation plan breaks down the static website development into discret
     - Test modal structure exists
     - _Requirements: 6.1, 6.2, 6.4_
 
-- [ ] 8. Create contact section
-  - [ ] 8.1 Build contact form HTML structure
+- [x] 8. Create contact section
+  - [x] 8.1 Build contact form HTML structure
     - Create section container with heading
     - Build two-column layout (form and contact info)
     - Create form with name, email, phone, message fields
@@ -182,14 +182,14 @@ This implementation plan breaks down the static website development into discret
     - Configure Formspree action URL
     - _Requirements: 7.1, 7.4_
 
-  - [ ] 8.2 Add contact information display
+  - [x] 8.2 Add contact information display
     - Add email address with mailto link
     - Add phone number with tel link
     - Add social media links with icons
     - Ensure proper ARIA labels for accessibility
     - _Requirements: 8.1, 8.2, 8.3, 8.4, 8.5, 12.5_
 
-  - [ ] 8.3 Implement form validation JavaScript
+  - [x] 8.3 Implement form validation JavaScript
     - Write function to validate required fields
     - Implement email format validation
     - Add Bootstrap validation classes dynamically
@@ -197,7 +197,7 @@ This implementation plan breaks down the static website development into discret
     - Prevent submission if validation fails
     - _Requirements: 7.2, 7.3_
 
-  - [ ] 8.4 Implement form submission handling
+  - [x] 8.4 Implement form submission handling
     - Write async function to submit form via Formspree
     - Handle successful submission response
     - Display success message to user
@@ -206,7 +206,7 @@ This implementation plan breaks down the static website development into discret
     - Display error message if submission fails
     - _Requirements: 7.4, 7.5_
 
-  - [ ] 8.5 Style contact section with custom CSS
+  - [x] 8.5 Style contact section with custom CSS
     - Style form inputs and labels
     - Add focus states for form fields
     - Style submit button with color scheme
@@ -230,14 +230,14 @@ This implementation plan breaks down the static website development into discret
     - Test success message displays after submission
     - _Requirements: 7.1, 7.4, 7.5, 8.1, 8.2, 8.4, 8.5_
 
-- [ ] 9. Implement footer
-  - [ ] 9.1 Create footer HTML structure
+- [x] 9. Implement footer
+  - [x] 9.1 Create footer HTML structure
     - Add footer element with copyright information
     - Add secondary navigation links
     - Add social media links
     - _Requirements: 8.3_
 
-  - [ ] 9.2 Style footer with custom CSS
+  - [x] 9.2 Style footer with custom CSS
     - Apply background color and spacing
     - Style footer links
     - Implement responsive layout
@@ -246,15 +246,15 @@ This implementation plan breaks down the static website development into discret
 - [ ] 10. Checkpoint - Ensure all tests pass
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 11. Implement responsive design and accessibility
-  - [ ] 11.1 Add responsive breakpoint styles
+- [x] 11. Implement responsive design and accessibility
+  - [x] 11.1 Add responsive breakpoint styles
     - Write media queries for mobile (< 768px)
     - Write media queries for tablet (768px - 1024px)
     - Write media queries for desktop (> 1024px)
     - Test and adjust layouts at each breakpoint
     - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.5_
 
-  - [ ] 11.2 Enhance accessibility features
+  - [x] 11.2 Enhance accessibility features
     - Add semantic HTML5 elements (header, main, section, footer)
     - Ensure all images have descriptive alt text
     - Add ARIA labels to interactive elements

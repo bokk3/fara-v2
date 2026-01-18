@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Professional Sport Coaching & Dance Instruction">
-  <title>Coach Dance Website - Transform Your Body & Mind</title>
+  <meta name="description" content="MoveToFit.be - Professional Sport Coaching & Dance Instruction by Fara Truyens">
+  <title>MoveToFit.be - Transform Your Body & Mind with Fara Truyens</title>
   
   <!-- Bootstrap 5 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -17,11 +17,15 @@
 </head>
 <body>
   
+  <!-- Skip to Content Link for Accessibility -->
+<!--  <a href="#main-content" class="skip-to-content">Skip to main content</a> -->
+  
   <!-- Navigation Bar -->
-  <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+  <header role="banner">
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" role="navigation" aria-label="Main navigation">
     <div class="container">
       <a class="navbar-brand" href="#home">
-        <strong>Coach & Dance</strong>
+        <strong>MoveToFit.be</strong>
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -47,18 +51,19 @@
       </div>
     </div>
   </nav>
+  </header>
   
   <!-- Main Content -->
-  <main>
+  <main id="main-content" role="main">
     
     <!-- Hero Section -->
-    <section id="home" class="hero-section">
+    <section id="home" class="hero-section" aria-labelledby="hero-heading">
       <div class="hero-overlay"></div>
       <div class="container">
         <div class="row align-items-center min-vh-100">
           <div class="col-lg-8 mx-auto text-center hero-content">
-            <h1 class="display-3 fw-bold hero-title">Transform Your Body & Mind</h1>
-            <p class="lead hero-subtitle">Professional Sport Coaching & Dance Instruction</p>
+            <h1 id="hero-heading" class="display-3 fw-bold hero-title">Transform Your Body & Mind</h1>
+            <p class="lead hero-subtitle">Professional Sport Coaching & Dance Instruction with Fara Truyens</p>
             <div class="hero-cta mt-4">
               <a href="#services" class="btn btn-primary btn-lg me-3">Explore Services</a>
               <a href="#contact" class="btn btn-outline-light btn-lg">Get in Touch</a>
@@ -68,9 +73,306 @@
       </div>
     </section>
     
-    <!-- Additional sections will be added in subsequent tasks -->
+    <!-- Services Section -->
+    <section id="services" class="services-section py-5" aria-labelledby="services-heading">
+      <div class="container">
+        <h2 id="services-heading" class="section-title text-center">My Services</h2>
+        <div class="row g-4">
+          <!-- Sport Coaching Service Card -->
+          <div class="col-md-6">
+            <div class="service-card card h-100">
+              <div class="card-body">
+                <div class="service-icon text-center mb-3">
+                  <i class="bi bi-trophy-fill"></i>
+                </div>
+                <h3 class="card-title text-center">Sport Coaching</h3>
+                <p class="card-text">
+                  Personalized sport coaching designed to help you reach your athletic goals. 
+                  Whether you're a beginner or an experienced athlete, I provide tailored training 
+                  programs that focus on technique, strength, and performance improvement.
+                </p>
+                <ul class="service-features">
+                  <li><i class="bi bi-check-circle-fill"></i> One-on-one personalized training sessions</li>
+                  <li><i class="bi bi-check-circle-fill"></i> Customized fitness and nutrition plans</li>
+                  <li><i class="bi bi-check-circle-fill"></i> Performance tracking and goal setting</li>
+                  <li><i class="bi bi-check-circle-fill"></i> Technique refinement and skill development</li>
+                  <li><i class="bi bi-check-circle-fill"></i> Injury prevention and recovery guidance</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Dance Teaching Service Card -->
+          <div class="col-md-6">
+            <div class="service-card card h-100">
+              <div class="card-body">
+                <div class="service-icon text-center mb-3">
+                  <i class="bi bi-music-note-beamed"></i>
+                </div>
+                <h3 class="card-title text-center">Dance Teaching</h3>
+                <p class="card-text">
+                  Express yourself through movement with professional dance instruction. 
+                  From beginners to advanced dancers, I offer classes in various styles that 
+                  combine technical skill with creative expression and performance confidence.
+                </p>
+                <ul class="service-features">
+                  <li><i class="bi bi-check-circle-fill"></i> Multiple dance styles (ballet, contemporary, jazz)</li>
+                  <li><i class="bi bi-check-circle-fill"></i> Individual and group lessons available</li>
+                  <li><i class="bi bi-check-circle-fill"></i> Choreography for performances and events</li>
+                  <li><i class="bi bi-check-circle-fill"></i> Flexibility and body conditioning training</li>
+                  <li><i class="bi bi-check-circle-fill"></i> Performance preparation and stage presence</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- About Section -->
+    <section id="about" class="about-section py-5" aria-labelledby="about-heading">
+      <div class="container">
+        <h2 id="about-heading-main" class="section-title text-center">About Me</h2>
+        <div class="row align-items-center">
+          <!-- Professional Photo -->
+          <div class="col-lg-5 mb-4 mb-lg-0">
+            <div class="about-image-wrapper">
+              <img src="images/about/coach-photo.jpg" alt="Fara Truyens - Professional sport coach and dance instructor with years of experience" class="img-fluid rounded about-image">
+            </div>
+          </div>
+          
+          <!-- Biography and Details -->
+          <div class="col-lg-7">
+            <div class="about-content">
+              <!-- Biography -->
+              <h3 class="about-heading">About Fara Truyens</h3>
+              <p class="about-text">
+                With over 10 years of experience in both sport coaching and dance instruction, 
+                I am passionate about helping individuals discover their potential and achieve 
+                their fitness and artistic goals. My journey began as a competitive athlete and 
+                dancer, which gave me firsthand insight into the dedication and guidance needed 
+                to excel in these fields.
+              </p>
+              <p class="about-text">
+                I believe in a holistic approach that combines technical skill development with 
+                mental strength and creative expression. Whether you're training for competition, 
+                improving your fitness, or exploring dance as a form of self-expression, I'm here 
+                to support and guide you every step of the way.
+              </p>
+              
+              <!-- Qualifications and Certifications -->
+              <h4 class="about-subheading">Qualifications & Certifications</h4>
+              <ul class="qualifications-list">
+                <li><i class="bi bi-award-fill"></i> Certified Personal Trainer (CPT) - National Academy of Sports Medicine</li>
+                <li><i class="bi bi-award-fill"></i> Level 3 Sports Coach - UK Coaching</li>
+                <li><i class="bi bi-award-fill"></i> Professional Dance Teaching Diploma - Royal Academy of Dance</li>
+                <li><i class="bi bi-award-fill"></i> Certified Nutrition Coach - Precision Nutrition</li>
+                <li><i class="bi bi-award-fill"></i> First Aid & CPR Certified</li>
+              </ul>
+              
+              <!-- Experience -->
+              <h4 class="about-subheading">Experience</h4>
+              <p class="about-text">
+                Throughout my career, I have worked with clients of all ages and skill levels, 
+                from beginners taking their first steps to advanced athletes and dancers preparing 
+                for competitions. I have coached youth sports teams, choreographed performances 
+                for dance companies, and helped countless individuals transform their health and 
+                confidence through personalized training programs at MoveToFit.be.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Gallery Section -->
+    <section id="gallery" class="gallery-section py-5" aria-labelledby="gallery-heading">
+      <div class="container">
+        <h2 id="gallery-heading" class="section-title text-center">Gallery</h2>
+        <div class="gallery-carousel-wrapper">
+          <!-- Previous Arrow -->
+          <button class="gallery-arrow gallery-arrow-prev" aria-label="Previous image">
+            <i class="bi bi-chevron-left"></i>
+          </button>
+          
+          <!-- Gallery Carousel -->
+          <div class="gallery-carousel">
+            <div class="gallery-track">
+              <!-- Sport Coaching Images -->
+              <div class="gallery-item">
+                <img src="images/gallery/sport-coaching-1.jpg" alt="Personal training session with athlete working on strength and conditioning exercises" class="gallery-image" data-bs-toggle="modal" data-bs-target="#galleryModal" data-image="images/gallery/sport-coaching-1.jpg">
+              </div>
+              
+              <div class="gallery-item">
+                <img src="images/gallery/sport-coaching-2.jpg" alt="Outdoor running coaching session focusing on technique and endurance training" class="gallery-image" data-bs-toggle="modal" data-bs-target="#galleryModal" data-image="images/gallery/sport-coaching-2.jpg">
+              </div>
+              
+              <div class="gallery-item">
+                <img src="images/gallery/sport-coaching-3.jpg" alt="Group fitness training session with multiple athletes in gym environment" class="gallery-image" data-bs-toggle="modal" data-bs-target="#galleryModal" data-image="images/gallery/sport-coaching-3.jpg">
+              </div>
+              
+              <!-- Dance Teaching Images -->
+              <div class="gallery-item">
+                <img src="images/gallery/dance-teaching-1.jpg" alt="Contemporary dance class with students practicing expressive movement and technique" class="gallery-image" data-bs-toggle="modal" data-bs-target="#galleryModal" data-image="images/gallery/dance-teaching-1.jpg">
+              </div>
+              
+              <div class="gallery-item">
+                <img src="images/gallery/dance-teaching-2.jpg" alt="Ballet instruction session focusing on proper form and classical technique" class="gallery-image" data-bs-toggle="modal" data-bs-target="#galleryModal" data-image="images/gallery/dance-teaching-2.jpg">
+              </div>
+              
+              <div class="gallery-item">
+                <img src="images/gallery/dance-teaching-3.jpg" alt="Jazz dance performance preparation with choreography rehearsal" class="gallery-image" data-bs-toggle="modal" data-bs-target="#galleryModal" data-image="images/gallery/dance-teaching-3.jpg">
+              </div>
+              
+              <div class="gallery-item">
+                <img src="images/gallery/sport-coaching-4.jpg" alt="One-on-one coaching session demonstrating proper exercise form and technique" class="gallery-image" data-bs-toggle="modal" data-bs-target="#galleryModal" data-image="images/gallery/sport-coaching-4.jpg">
+              </div>
+              
+              <div class="gallery-item">
+                <img src="images/gallery/dance-teaching-4.jpg" alt="Dance studio group class with students learning new choreography" class="gallery-image" data-bs-toggle="modal" data-bs-target="#galleryModal" data-image="images/gallery/dance-teaching-4.jpg">
+              </div>
+              
+              <div class="gallery-item">
+                <img src="images/gallery/sport-coaching-5.jpg" alt="Athletic performance training with focus on speed and agility drills" class="gallery-image" data-bs-toggle="modal" data-bs-target="#galleryModal" data-image="images/gallery/sport-coaching-5.jpg">
+              </div>
+            </div>
+          </div>
+          
+          <!-- Next Arrow -->
+          <button class="gallery-arrow gallery-arrow-next" aria-label="Next image">
+            <i class="bi bi-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section py-5" aria-labelledby="contact-heading">
+      <div class="container">
+        <h2 id="contact-heading" class="section-title text-center">Get in Touch</h2>
+        <div class="row">
+          <!-- Contact Form -->
+          <div class="col-lg-6 mb-4 mb-lg-0">
+            <form id="contactForm" action="https://formspree.io/f/xgooapgw" method="POST" novalidate aria-label="Contact form">
+              <!-- Name Field -->
+              <div class="mb-3">
+                <label for="name" class="form-label">Name *</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+                <div class="invalid-feedback">Please enter your name.</div>
+              </div>
+              
+              <!-- Email Field -->
+              <div class="mb-3">
+                <label for="email" class="form-label">Email *</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+                <div class="invalid-feedback">Please enter a valid email address.</div>
+              </div>
+              
+              <!-- Phone Field -->
+              <div class="mb-3">
+                <label for="phone" class="form-label">Phone</label>
+                <input type="tel" class="form-control" id="phone" name="phone">
+              </div>
+              
+              <!-- Message Field -->
+              <div class="mb-3">
+                <label for="message" class="form-label">Message *</label>
+                <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
+                <div class="invalid-feedback">Please enter a message.</div>
+              </div>
+              
+              <!-- Submit Button -->
+              <button type="submit" class="btn btn-primary btn-lg w-100" aria-label="Submit contact form">Send Message</button>
+            </form>
+            
+            <!-- Form Status Message -->
+            <div id="formStatus" class="mt-3" role="status" aria-live="polite"></div>
+          </div>
+          
+          <!-- Contact Information -->
+          <div class="col-lg-6">
+            <div class="contact-info">
+              <h3 class="contact-info-heading">Contact Information</h3>
+              <p class="contact-info-text">
+                Feel free to reach out to me through any of the following methods. 
+                I'm here to answer your questions and help you start your fitness or dance journey with MoveToFit.be!
+              </p>
+              
+              <!-- Email -->
+              <div class="contact-item">
+                <i class="bi bi-envelope-fill"></i>
+                <div class="contact-item-content">
+                  <h5>Email</h5>
+                  <a href="mailto:fara@movetofit.be" aria-label="Send email to fara@movetofit.be">fara@movetofit.be</a>
+                </div>
+              </div>
+              
+              <!-- Phone -->
+              <div class="contact-item">
+                <i class="bi bi-phone-fill"></i>
+                <div class="contact-item-content">
+                  <h5>Phone</h5>
+                  <a href="tel:+1234567890" aria-label="Call +1 (234) 567-890">+1 (234) 567-890</a>
+                </div>
+              </div>
+              
+              <!-- Social Media Links -->
+              <div class="social-links mt-4">
+                <h5 class="mb-3">Follow Me</h5>
+                <div class="social-buttons">
+                  <a href="https://facebook.com" class="btn btn-outline-primary social-btn" target="_blank" rel="noopener noreferrer" aria-label="Visit our Facebook page">
+                    <i class="bi bi-facebook"></i>
+                  </a>
+                  <a href="https://instagram.com" class="btn btn-outline-primary social-btn" target="_blank" rel="noopener noreferrer" aria-label="Visit our Instagram profile">
+                    <i class="bi bi-instagram"></i>
+                  </a>
+                  <a href="https://linkedin.com" class="btn btn-outline-primary social-btn" target="_blank" rel="noopener noreferrer" aria-label="Visit our LinkedIn profile">
+                    <i class="bi bi-linkedin"></i>
+                  </a>
+                  <a href="https://twitter.com" class="btn btn-outline-primary social-btn" target="_blank" rel="noopener noreferrer" aria-label="Visit our Twitter profile">
+                    <i class="bi bi-twitter"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
     
   </main>
+  
+  <!-- Footer -->
+  <footer class="footer py-4" role="contentinfo">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+          <p class="footer-copyright mb-0">
+            &copy; <span id="currentYear"></span> MoveToFit.be - All rights reserved
+          </p>
+        </div>
+        <div class="col-md-6 text-center text-md-end">
+          <p class="footer-credit mb-0">
+            Designed with <span class="heart">❤️</span> in Belgium by <a href="https://truyens.pro" target="_blank" rel="noopener noreferrer" class="footer-link">truyens.pro</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+  
+  <!-- Gallery Lightbox Modal -->
+  <div class="modal fade" id="galleryModal" tabindex="-1" aria-labelledby="galleryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <img src="" alt="" class="img-fluid" id="modalImage">
+        </div>
+      </div>
+    </div>
+  </div>
   
   <!-- Bootstrap 5 JS Bundle (includes Popper) -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
