@@ -6,7 +6,7 @@ This implementation plan breaks down the static website development into discret
 
 ## Tasks
 
-- [ ] 1. Set up project structure and core files
+- [x] 1. Set up project structure and core files
   - Create directory structure (css/, js/, images/, assets/)
   - Create index.html with basic HTML5 boilerplate
   - Include Bootstrap 5 CSS and JS via CDN
@@ -22,21 +22,21 @@ This implementation plan breaks down the static website development into discret
   - Test that custom CSS and JS files are linked
   - _Requirements: 9.4, 9.5, 11.4_
 
-- [ ] 2. Implement navigation component
-  - [ ] 2.1 Create fixed navigation bar with Bootstrap navbar component
+- [x] 2. Implement navigation component
+  - [x] 2.1 Create fixed navigation bar with Bootstrap navbar component
     - Add logo/brand name
     - Add navigation links (Home, Services, About, Gallery, Contact)
     - Implement responsive hamburger menu for mobile
     - Add Bootstrap collapse functionality
     - _Requirements: 1.1, 1.3, 1.4_
 
-  - [ ] 2.2 Implement smooth scrolling for navigation links
+  - [x] 2.2 Implement smooth scrolling for navigation links
     - Write JavaScript function to handle anchor link clicks
     - Implement smooth scroll behavior to target sections
     - Add offset for fixed navbar height
     - _Requirements: 1.2_
 
-  - [ ] 2.3 Implement active section highlighting
+  - [x] 2.3 Implement active section highlighting
     - Write JavaScript to detect current section in viewport
     - Update active class on corresponding nav link
     - Add scroll event listener with throttling
@@ -56,15 +56,15 @@ This implementation plan breaks down the static website development into discret
     - Test navbar has fixed positioning
     - _Requirements: 1.1, 1.3, 1.4_
 
-- [ ] 3. Create hero section
-  - [ ] 3.1 Build hero section HTML structure
+- [x] 3. Create hero section
+  - [x] 3.1 Build hero section HTML structure
     - Create full-height hero section
     - Add hero background image with overlay
     - Add heading, subheading, and CTA buttons
     - Implement responsive typography
     - _Requirements: 3.3, 3.5_
 
-  - [ ] 3.2 Style hero section with custom CSS
+  - [x] 3.2 Style hero section with custom CSS
     - Apply color scheme to buttons and text
     - Add background image with overlay effect
     - Implement responsive font sizes
@@ -76,7 +76,7 @@ This implementation plan breaks down the static website development into discret
     - Test CTA buttons link to correct sections
     - _Requirements: 3.3_
 
-- [ ] 4. Implement services section
+- [-] 4. Implement services section
   - [ ] 4.1 Create services section HTML structure
     - Create section container with heading
     - Build two service cards using Bootstrap card component
