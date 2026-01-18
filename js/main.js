@@ -24,6 +24,9 @@ document.addEventListener('DOMContentLoaded', function() {
   // Set current year in footer
   setCurrentYear();
   
+  // Initialize image error handling
+  initImageErrorHandling();
+  
   // Additional initialization will be added in subsequent tasks
 });
 
@@ -541,4 +544,86 @@ function setCurrentYear() {
   if (yearElement) {
     yearElement.textContent = new Date().getFullYear();
   }
+}
+
+/**
+ * Initialize image error handling for all images on the page
+ * Applies error handling to prevent broken image icons from displaying
+ */
+function initImageErrorHandling() {
+  // Get all images on the page
+  const images = document.querySelectorAll('img');
+  
+  // Apply error handler to each image
+  images.forEach(img => {
+    // Add error event listener
+    img.addEventListener('error', function() {
+      handleImageError(this);
+    });
+    
+    // Also check if image is already in error state (for cached errors)
+    if (!img.complete || img.naturalHeight === 0) {
+      // Image hasn't loaded yet or failed to load
+      img.addEventListener('load', function() {
+        // Image loaded successfully, no action needed
+      });
+    }
+  });
+}
+
+/**
+ * Handle image loading errors by replacing with fallback placeholder
+ * @param {HTMLImageElement} img - The image element that failed to load
+ */
+function handleImageError(img) {
+  // Prevent infinite loop if placeholder also fails
+  if (img.classList.contains('image-error')) {
+    return;
+  }
+  
+  // Mark image as having an error
+  img.classList.add('image-error');
+  
+  // Create a placeholder using SVG data URI
+  const placeholderSvg = createPlaceholderSvg(img.alt || 'Image not available');
+  
+  // Set the placeholder as the image source
+  img.src = placeholderSvg;
+  
+  // Update alt text to indicate the image is unavailable
+  if (!img.alt || img.alt.trim() === '') {
+    img.alt = 'Image not available';
+  }
+  
+  // Log error for debugging (can be removed in production)
+  console.warn('Image failed to load:', img.dataset.image || img.getAttribute('data-image') || 'unknown source');
+}
+
+/**
+ * Create an SVG placeholder image as a data URI
+ * @param {string} altText - The alt text to display in the placeholder
+ * @returns {string} - Data URI for the SVG placeholder
+ */
+function createPlaceholderSvg(altText) {
+  // Truncate alt text if too long
+  const displayText = altText.length > 30 ? altText.substring(0, 27) + '...' : altText;
+  
+  // Create SVG with neutral gray background and icon
+  const svg = `
+    <svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300">
+      <rect width="400" height="300" fill="#e9ecef"/>
+      <g transform="translate(200, 150)">
+        <circle cx="0" cy="-20" r="30" fill="#adb5bd" opacity="0.5"/>
+        <path d="M -40 20 L -40 -10 L 40 -10 L 40 20 Z" fill="#adb5bd" opacity="0.5"/>
+        <circle cx="-15" cy="-25" r="8" fill="#6c757d" opacity="0.7"/>
+        <path d="M -40 20 L -10 -5 L 10 5 L 40 -15 L 40 20 Z" fill="#6c757d" opacity="0.7"/>
+      </g>
+      <text x="200" y="260" font-family="Arial, sans-serif" font-size="14" fill="#6c757d" text-anchor="middle">
+        ${displayText}
+      </text>
+    </svg>
+  `;
+  
+  // Convert SVG to data URI
+  return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
 }

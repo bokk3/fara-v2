@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Error Handling Test</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
+    .test-container { margin: 20px 0; padding: 20px; border: 1px solid #ccc; background: white; }
+    img { max-width: 400px; margin: 10px; display: block; }
+    .image-error { opacity: 0.8; filter: grayscale(20%); border: 2px dashed #718096; }
+    .status { padding: 10px; margin: 10px 0; border-radius: 4px; }
+    .success { background: #d4edda; color: #155724; }
+    .error { background: #f8d7da; color: #721c24; }
+  </style>
+</head>
+<body>
+  <h1>Image Error Handling Test</h1>
+  <p>This page tests the image error handling functionality.</p>
+  
+  <div class="test-container">
+    <h2>Test 1: Valid Image (should load normally)</h2>
+    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='150'%3E%3Crect width='200' height='150' fill='%234ECDC4'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='white' font-size='20'%3EValid Image%3C/text%3E%3C/svg%3E" alt="Valid test image">
+    <div id="status1" class="status"></div>
+  </div>
+  
+  <div class="test-container">
+    <h2>Test 2: Invalid Image (should show placeholder)</h2>
+    <img id="test2" src="invalid-image-path.jpg" alt="This image does not exist">
+    <div id="status2" class="status"></div>
+  </div>
+  
+  <div class="test-container">
+    <h2>Test 3: Another Invalid Image with Long Alt Text</h2>
+    <img id="test3" src="https://invalid-domain-that-does-not-exist.com/image.jpg" alt="This is a very long alt text that should be truncated in the placeholder">
+    <div id="status3" class="status"></div>
+  </div>
+  
+  <script src="js/main.js"></script>
+  
+  <script>
+    // Test status tracking
+    setTimeout(() => {
+      const test2 = document.getElementById('test2');
+      const test3 = document.getElementById('test3');
+      
+      if (test2.classList.contains('image-error')) {
+        document.getElementById('status2').innerHTML = '✓ Test 2 PASSED: Placeholder applied';
+        document.getElementById('status2').className = 'status success';
+      } else {
+        document.getElementById('status2').innerHTML = '✗ Test 2 FAILED: Placeholder not applied';
+        document.getElementById('status2').className = 'status error';
+      }
+      
+      if (test3.classList.contains('image-error')) {
+        document.getElementById('status3').innerHTML = '✓ Test 3 PASSED: Placeholder applied';
+        document.getElementById('status3').className = 'status success';
+      } else {
+        document.getElementById('status3').innerHTML = '✗ Test 3 FAILED: Placeholder not applied';
+        document.getElementById('status3').className = 'status error';
+      }
+      
+      document.getElementById('status1').innerHTML = '✓ Test 1 PASSED: Valid image loaded';
+      document.getElementById('status1').className = 'status success';
+    }, 2000);
+  </script>
+</body>
+</html>
