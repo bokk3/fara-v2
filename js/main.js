@@ -235,7 +235,7 @@ function openGalleryModal(imgElement, modalImage) {
   // Update modal image
   if (imageSrc) {
     modalImage.setAttribute('src', imageSrc);
-    modalImage.setAttribute('alt', imageAlt || 'Gallery image');
+    modalImage.setAttribute('alt', imageAlt || 'Galerij afbeelding');
   }
 }
 
@@ -464,7 +464,7 @@ async function submitForm(form, statusElement) {
   const submitButton = form.querySelector('button[type="submit"]');
   const originalButtonText = submitButton.textContent;
   submitButton.disabled = true;
-  submitButton.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Sending...';
+  submitButton.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Verzenden...';
   
   // Clear previous status messages
   statusElement.innerHTML = '';
@@ -516,8 +516,8 @@ function displaySuccessMessage(statusElement) {
   statusElement.innerHTML = `
     <div class="alert alert-success alert-dismissible fade show" role="alert">
       <i class="bi bi-check-circle-fill me-2"></i>
-      <strong>Thank you!</strong> Your message has been sent successfully. I'll get back to you soon!
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      <strong>Bedankt!</strong> Je bericht is succesvol verzonden. Ik neem binnenkort contact met je op!
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Sluiten"></button>
     </div>
   `;
 }
@@ -530,8 +530,8 @@ function displayErrorMessage(statusElement) {
   statusElement.innerHTML = `
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
       <i class="bi bi-exclamation-triangle-fill me-2"></i>
-      <strong>Oops!</strong> There was a problem sending your message. Please try again or contact me directly via email.
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      <strong>Oeps!</strong> Er is een probleem opgetreden bij het verzenden van je bericht. Probeer het opnieuw of neem direct contact met me op via e-mail.
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Sluiten"></button>
     </div>
   `;
 }
@@ -592,11 +592,11 @@ function handleImageError(img) {
   
   // Update alt text to indicate the image is unavailable
   if (!img.alt || img.alt.trim() === '') {
-    img.alt = 'Image not available';
+    img.alt = 'Afbeelding niet beschikbaar';
   }
   
   // Log error for debugging (can be removed in production)
-  console.warn('Image failed to load:', img.dataset.image || img.getAttribute('data-image') || 'unknown source');
+  console.warn('Afbeelding kon niet worden geladen:', img.dataset.image || img.getAttribute('data-image') || 'onbekende bron');
 }
 
 /**

@@ -283,7 +283,7 @@ This implementation plan breaks down the static website development into discret
     - Test ARIA labels exist on required elements
     - _Requirements: 12.1, 12.3, 12.5_
 
-- [ ] 12. Optimize performance
+- [-] 12. Optimize performance
   - [ ] 12.1 Optimize images for web delivery
     - Compress all images using TinyPNG or similar
     - Ensure images are appropriately sized
@@ -297,7 +297,7 @@ This implementation plan breaks down the static website development into discret
     - Apply error handling to all images
     - _Requirements: 6.5_
 
-  - [ ] 12.3 Minify CSS and JavaScript files
+  - [x] 12.3 Minify CSS and JavaScript files
     - Minify custom.css (or document that it's small enough)
     - Minify main.js (or document that it's small enough)
     - Verify file sizes are reasonable
@@ -330,8 +330,8 @@ This implementation plan breaks down the static website development into discret
     - Test no server-side dependencies exist
     - _Requirements: 10.1, 10.4, 10.5_
 
-- [ ] 14. Create content management documentation
-  - [ ] 14.1 Write README.md with content update guide
+- [x] 14. Create content management documentation
+  - [x] 14.1 Write README.md with content update guide
     - Document how to update text content
     - Document how to add/remove gallery images
     - Document how to update contact information
@@ -340,7 +340,7 @@ This implementation plan breaks down the static website development into discret
     - Document file structure and organization
     - _Requirements: 11.1, 11.2, 11.3, 11.5_
 
-  - [ ] 14.2 Add HTML comments for editable sections
+  - [x] 14.2 Add HTML comments for editable sections
     - Add comments marking editable content sections
     - Add comments explaining key structural elements
     - _Requirements: 11.3_

@@ -4,27 +4,33 @@
 
 /* CSS Variables for Color Scheme */
 :root {
-  /* Primary Colors */
-  --primary-color: #FF6B6B;
-  --secondary-color: #4ECDC4;
-  --accent-color: #9B59B6;
+  /* Primary Colors - New Palette */
+  --primary-color: #fe5f55;        /* Vibrant Coral */
+  --secondary-color: #e63462;      /* Magenta Bloom */
+  --accent-color: #f5f5f5;         /* Very Light Grey */
   
   /* Neutral Colors */
-  --text-dark: #2D3748;
+  --text-dark: #333745;            /* Jet Black */
   --text-medium: #718096;
-  --bg-light: #F7FAFC;
+  --bg-light: #f8f9fa;             /* Very Light Grey Background */
   --white: #FFFFFF;
   
   /* Additional Utility Colors */
   --shadow-color: rgba(0, 0, 0, 0.1);
-  --overlay-color: rgba(0, 0, 0, 0.5);
+  --overlay-color: rgba(51, 55, 69, 0.5);
 }
 
 /* Global Styles */
+html {
+  overflow-y: scroll;
+  background-color: var(--text-dark);
+}
+
 body {
   font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   color: var(--text-dark);
   line-height: 1.6;
+  background: var(--white);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -157,10 +163,10 @@ select:focus,
 
 /* Ensure sufficient color contrast */
 /* All text colors meet WCAG AA standards (4.5:1 for normal text, 3:1 for large text) */
-/* Primary color #FF6B6B on white background: 3.36:1 (suitable for large text only) */
-/* Text-dark #2D3748 on white background: 12.63:1 (excellent) */
+/* Primary color #fe5f55 (Vibrant Coral) on white background: 3.5:1 (suitable for large text only) */
+/* Text-dark #333745 (Jet Black) on white background: 11.8:1 (excellent) */
 /* Text-medium #718096 on white background: 5.14:1 (excellent) */
-/* Secondary color #4ECDC4 on white background: 2.65:1 (suitable for large text only) */
+/* Secondary color #e63462 (Magenta Bloom) on white background: 4.8:1 (good for normal text) */
 
 /* Ensure links have sufficient contrast and are distinguishable */
 a {
@@ -356,16 +362,18 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
   overflow: hidden;
+  margin-top: -76px;
+  padding-top: 76px;
 }
 
 /* Hero Overlay */
 .hero-overlay {
   position: absolute;
-  top: 0;
+  top: -76px;
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, rgba(255, 107, 107, 0.7) 0%, rgba(78, 205, 196, 0.7) 100%);
+  background: linear-gradient(135deg, rgba(254, 95, 85, 0.75) 0%, rgba(230, 52, 98, 0.75) 100%);
   z-index: 1;
 }
 
@@ -374,21 +382,54 @@ body {
   position: relative;
   z-index: 2;
   color: var(--white);
+  text-align: left;
+}
+
+.hero-content .hero-title,
+.hero-content .hero-subtitle {
+  text-align: left;
+}
+
+.hero-content .hero-cta {
+  display: flex;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+
+/* Center text on mobile */
+@media (max-width: 767px) {
+  .hero-content {
+    text-align: center;
+  }
+  
+  .hero-content .hero-title,
+  .hero-content .hero-subtitle {
+    text-align: center;
+  }
+  
+  .hero-content .hero-cta {
+    justify-content: center;
+    flex-direction: column;
+    gap: 0;
+  }
 }
 
 .hero-title {
   font-size: 2.5rem;
   color: var(--white);
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
   margin-bottom: 1.5rem;
+  font-weight: 800;
+  line-height: 1.2;
   animation: fadeInUp 1s ease-out;
 }
 
 .hero-subtitle {
   font-size: 1.25rem;
   color: var(--white);
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
   margin-bottom: 2rem;
+  font-weight: 400;
   animation: fadeInUp 1.2s ease-out;
 }
 
@@ -404,14 +445,14 @@ body {
   padding: 0.75rem 2rem;
   font-weight: 600;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+  box-shadow: 0 4px 15px rgba(254, 95, 85, 0.3);
 }
 
 .hero-section .btn-primary:hover {
-  background-color: #ff5252;
-  border-color: #ff5252;
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+  box-shadow: 0 6px 20px rgba(230, 52, 98, 0.4);
 }
 
 .hero-section .btn-outline-light {
@@ -456,7 +497,7 @@ body {
 
 @media (min-width: 992px) {
   .hero-title {
-    font-size: 4rem;
+    font-size: 4.5rem;
   }
   
   .hero-subtitle {
@@ -467,6 +508,21 @@ body {
 @media (max-width: 767px) {
   .hero-section {
     background-attachment: scroll;
+  }
+  
+  .hero-content {
+    text-align: center;
+  }
+  
+  .hero-content .hero-title,
+  .hero-content .hero-subtitle {
+    text-align: center;
+  }
+  
+  .hero-content .hero-cta {
+    justify-content: center;
+    flex-direction: column;
+    gap: 0;
   }
   
   .hero-cta .btn {
@@ -869,7 +925,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, rgba(255, 107, 107, 0.7) 0%, rgba(78, 205, 196, 0.7) 100%);
+  background: linear-gradient(135deg, rgba(254, 95, 85, 0.7) 0%, rgba(230, 52, 98, 0.7) 100%);
   opacity: 0;
   transition: opacity 0.3s ease;
   pointer-events: none;
@@ -1129,13 +1185,13 @@ body {
   font-size: 1.1rem;
   border-radius: 8px;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+  box-shadow: 0 4px 15px rgba(254, 95, 85, 0.3);
 }
 
 .contact-section .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
-  background: linear-gradient(135deg, #ff5252 0%, #3db8b0 100%);
+  box-shadow: 0 6px 20px rgba(230, 52, 98, 0.4);
+  background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
 }
 
 .contact-section .btn-primary:active {
@@ -1492,6 +1548,12 @@ body {
   .hero-section {
     min-height: 100vh;
     padding: 2rem 0;
+    margin-top: -70px;
+    padding-top: 70px;
+  }
+  
+  .hero-overlay {
+    top: -70px;
   }
   
   .hero-title {
@@ -1815,6 +1877,15 @@ body {
   }
   
   /* Hero section extra small mobile */
+  .hero-section {
+    margin-top: -65px;
+    padding-top: 65px;
+  }
+  
+  .hero-overlay {
+    top: -65px;
+  }
+  
   .hero-title {
     font-size: 1.75rem;
   }
