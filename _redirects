@@ -1,0 +1,7 @@
+# Cloudflare Pages redirects and rewrites
+# This file ensures proper routing
+
+# Ensure CSS and JS files are served with correct MIME types
+/css/* /css/:splat 200
+/js/* /js/:splat 200
+/images/* /images/:splat 200

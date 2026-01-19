@@ -1,9 +1,14 @@
 /*
-  Content-Type: text/html; charset=utf-8
   X-Content-Type-Options: nosniff
 
-/*.css
+/*.html
+  Content-Type: text/html; charset=utf-8
+
+/css/*.css
   Content-Type: text/css; charset=utf-8
 
-/*.js
+/js/*.js
   Content-Type: application/javascript; charset=utf-8
+
+/images/*
+  Cache-Control: public, max-age=31536000

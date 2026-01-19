@@ -430,9 +430,7 @@ body {
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
   margin-bottom: 1rem;
   font-weight: 600;
-  font-style: italic;
   animation: fadeInUp 1.1s ease-out;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
 }
 
 .hero-slogan .emoji {
