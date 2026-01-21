@@ -143,6 +143,10 @@ function updateActiveNavLink() {
     
     // Don't modify active state for non-anchor links (like blog.html)
     if (!href.startsWith('#')) {
+      // But DO remove active class from blog link if we're not in blog-preview section
+      if (href === 'blog.html') {
+        link.classList.remove('active');
+      }
       return;
     }
     
@@ -153,7 +157,7 @@ function updateActiveNavLink() {
     }
   });
   
-  // Special case: Highlight blog link when in blog-preview section
+  // Special case: Highlight blog link ONLY when in blog-preview section
   const blogLink = document.querySelector('a.nav-link[href="blog.html"]');
   if (blogLink && currentSection === 'blog-preview') {
     blogLink.classList.add('active');
