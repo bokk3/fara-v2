@@ -152,6 +152,12 @@ function updateActiveNavLink() {
       link.classList.add('active');
     }
   });
+  
+  // Special case: Highlight blog link when in blog-preview section
+  const blogLink = document.querySelector('a.nav-link[href="blog.html"]');
+  if (blogLink && currentSection === 'blog-preview') {
+    blogLink.classList.add('active');
+  }
 }
 
 /**
@@ -851,3 +857,105 @@ style.textContent = `
   }
 `;
 document.head.appendChild(style);
+
+
+/**
+ * Load Latest Blog Posts for Homepage Preview
+ * Displays the 3 most recent blog posts
+ */
+async function loadLatestBlogPosts() {
+  const latestPostsContainer = document.getElementById('latestPosts');
+  
+  if (!latestPostsContainer) {
+    return; // Not on homepage
+  }
+  
+  try {
+    // Fetch blog posts index
+    const response = await fetch('blog/blog-posts.json');
+    
+    if (!response.ok) {
+      throw new Error('Failed to load blog posts');
+    }
+    
+    const data = await response.json();
+    const posts = data.posts || [];
+    
+    if (posts.length === 0) {
+      latestPostsContainer.innerHTML = '<p class="text-center text-muted py-3">Nog geen blog artikelen beschikbaar.</p>';
+      return;
+    }
+    
+    // Sort by date (newest first) and take top 3
+    const latestPosts = posts
+      .sort((a, b) => new Date(b.date) - new Date(a.date))
+      .slice(0, 3);
+    
+    // Clear loading state
+    latestPostsContainer.innerHTML = '';
+    
+    // Create preview items
+    latestPosts.forEach(post => {
+      const previewItem = createBlogPreviewItem(post);
+      latestPostsContainer.appendChild(previewItem);
+    });
+    
+  } catch (error) {
+    console.error('Error loading latest blog posts:', error);
+    latestPostsContainer.innerHTML = '<p class="text-center text-muted py-3">Kon blog artikelen niet laden.</p>';
+  }
+}
+
+/**
+ * Create a blog preview item element
+ * @param {Object} post - Post data
+ * @returns {HTMLElement} - Preview item element
+ */
+function createBlogPreviewItem(post) {
+  const item = document.createElement('a');
+  item.href = `blog-post.html?slug=${post.slug}`;
+  item.className = 'blog-preview-item';
+  
+  const formattedDate = formatDateShort(post.date);
+  
+  item.innerHTML = `
+    <div class="blog-preview-content">
+      <span class="blog-preview-category">${post.category}</span>
+      <h3 class="blog-preview-title">${post.title}</h3>
+      <div class="blog-preview-meta">
+        <span class="blog-preview-date">
+          <i class="bi bi-calendar3"></i>
+          ${formattedDate}
+        </span>
+        <span class="blog-preview-read-time">
+          <i class="bi bi-clock"></i>
+          ${post.readTime} min
+        </span>
+      </div>
+    </div>
+    <div class="blog-preview-arrow">
+      <i class="bi bi-arrow-right"></i>
+    </div>
+  `;
+  
+  return item;
+}
+
+/**
+ * Format date to short Dutch format
+ * @param {string} dateString - ISO date string
+ * @returns {string} - Formatted date
+ */
+function formatDateShort(dateString) {
+  const date = new Date(dateString);
+  return date.toLocaleDateString('nl-BE', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric'
+  });
+}
+
+// Load latest blog posts on homepage
+document.addEventListener('DOMContentLoaded', function() {
+  loadLatestBlogPosts();
+});
