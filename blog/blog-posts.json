@@ -1,0 +1,22 @@
+{
+  "posts": [
+    {
+      "slug": "5-oefeningen-voor-een-sterkere-core",
+      "title": "5 Oefeningen voor een Sterkere Core",
+      "excerpt": "Ontdek de beste oefeningen om je core te versterken en je houding te verbeteren. Perfect voor beginners en gevorderden!",
+      "category": "Fitness",
+      "date": "2026-01-20",
+      "readTime": 5,
+      "file": "5-oefeningen-voor-een-sterkere-core.md"
+    },
+    {
+      "slug": "jazzdance-voor-beginners",
+      "title": "Jazzdance voor Beginners: Waar Begin Je?",
+      "excerpt": "Wil je starten met jazzdance maar weet je niet waar te beginnen? Deze gids helpt je op weg met tips en basisstappen.",
+      "category": "Dans",
+      "date": "2026-01-15",
+      "readTime": 4,
+      "file": "jazzdance-voor-beginners.md"
+    }
+  ]
+}
