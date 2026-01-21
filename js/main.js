@@ -139,9 +139,15 @@ function updateActiveNavLink() {
   // Update active class on nav links
   const navLinks = document.querySelectorAll('.nav-link');
   navLinks.forEach(link => {
+    const href = link.getAttribute('href');
+    
+    // Don't modify active state for non-anchor links (like blog.html)
+    if (!href.startsWith('#')) {
+      return;
+    }
+    
     link.classList.remove('active');
     
-    const href = link.getAttribute('href');
     if (href === `#${currentSection}`) {
       link.classList.add('active');
     }
