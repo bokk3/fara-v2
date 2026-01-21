@@ -703,3 +703,145 @@ function createPlaceholderSvg(altText) {
   // Convert SVG to data URI
   return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
 }
+
+
+/**
+ * Cookie Consent Management
+ * Handles GDPR-compliant cookie consent and loads analytics scripts only after consent
+ */
+
+// Initialize cookie consent on page load
+document.addEventListener('DOMContentLoaded', function() {
+  initCookieConsent();
+});
+
+/**
+ * Initialize cookie consent banner
+ */
+function initCookieConsent() {
+  const cookieBanner = document.getElementById('cookieBanner');
+  const acceptButton = document.getElementById('cookieAccept');
+  const declineButton = document.getElementById('cookieDecline');
+  
+  if (!cookieBanner || !acceptButton || !declineButton) {
+    console.warn('Cookie banner elements not found');
+    return;
+  }
+  
+  // Check if user has already made a choice
+  const cookieConsent = getCookieConsent();
+  
+  if (cookieConsent === null) {
+    // No choice made yet, show banner
+    cookieBanner.style.display = 'block';
+  } else if (cookieConsent === 'accepted') {
+    // User accepted, load analytics
+    loadAnalytics();
+  }
+  // If declined, do nothing (no analytics loaded)
+  
+  // Accept button handler
+  acceptButton.addEventListener('click', function() {
+    setCookieConsent('accepted');
+    hideCookieBanner();
+    loadAnalytics();
+  });
+  
+  // Decline button handler
+  declineButton.addEventListener('click', function() {
+    setCookieConsent('declined');
+    hideCookieBanner();
+  });
+}
+
+/**
+ * Get cookie consent status from localStorage
+ * @returns {string|null} - 'accepted', 'declined', or null if not set
+ */
+function getCookieConsent() {
+  return localStorage.getItem('cookieConsent');
+}
+
+/**
+ * Set cookie consent status in localStorage
+ * @param {string} status - 'accepted' or 'declined'
+ */
+function setCookieConsent(status) {
+  localStorage.setItem('cookieConsent', status);
+  localStorage.setItem('cookieConsentDate', new Date().toISOString());
+}
+
+/**
+ * Hide cookie banner with animation
+ */
+function hideCookieBanner() {
+  const cookieBanner = document.getElementById('cookieBanner');
+  if (cookieBanner) {
+    cookieBanner.style.animation = 'slideDown 0.4s ease-out';
+    setTimeout(() => {
+      cookieBanner.style.display = 'none';
+    }, 400);
+  }
+}
+
+/**
+ * Load analytics scripts (Google Analytics and Cloudflare)
+ * Only called after user consent
+ */
+function loadAnalytics() {
+  // Load Google Analytics
+  loadGoogleAnalytics();
+  
+  // Load Cloudflare Analytics
+  loadCloudflareAnalytics();
+}
+
+/**
+ * Load Google Analytics script
+ */
+function loadGoogleAnalytics() {
+  // Create and load gtag.js script
+  const gtagScript = document.createElement('script');
+  gtagScript.async = true;
+  gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-DWDZZ6XQ7J';
+  document.head.appendChild(gtagScript);
+  
+  // Initialize Google Analytics
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DWDZZ6XQ7J', {
+    'anonymize_ip': true // IP anonymization for GDPR compliance
+  });
+  
+  console.log('Google Analytics loaded');
+}
+
+/**
+ * Load Cloudflare Analytics script
+ */
+function loadCloudflareAnalytics() {
+  const cfScript = document.createElement('script');
+  cfScript.defer = true;
+  cfScript.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+  cfScript.setAttribute('data-cf-beacon', '{"token": "bbbde03f2364406bb3d864912150e838"}');
+  document.head.appendChild(cfScript);
+  
+  console.log('Cloudflare Analytics loaded');
+}
+
+// Add slideDown animation to CSS dynamically
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes slideDown {
+    from {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+  }
+`;
+document.head.appendChild(style);
