@@ -354,10 +354,45 @@ function initContactForm() {
   // Add form submit event listener
   form.addEventListener('submit', async function(e) {
     e.preventDefault();
+    e.stopPropagation();
+    
+    // Get checkboxes
+    const privacyCheck = form.querySelector('#privacyCheck');
+    const termsCheck = form.querySelector('#termsCheck');
+    
+    // CRITICAL: Check if both checkboxes are checked BEFORE any other validation
+    if (!privacyCheck.checked || !termsCheck.checked) {
+      // Mark checkboxes as invalid
+      if (!privacyCheck.checked) {
+        privacyCheck.classList.add('is-invalid');
+        privacyCheck.classList.remove('is-valid');
+      }
+      if (!termsCheck.checked) {
+        termsCheck.classList.add('is-invalid');
+        termsCheck.classList.remove('is-valid');
+      }
+      
+      // Add validation class to form
+      form.classList.add('was-validated');
+      
+      // Show error message
+      formStatus.innerHTML = `
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <i class="bi bi-exclamation-triangle-fill me-2"></i>
+          <strong>Let op!</strong> Je moet akkoord gaan met het privacybeleid en de algemene voorwaarden om een bericht te versturen.
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Sluiten"></button>
+        </div>
+      `;
+      
+      // Scroll to error message
+      formStatus.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      
+      return false;
+    }
     
     // Validate form
     if (!validateForm(form)) {
-      return;
+      return false;
     }
     
     // If validation passes, submit the form
@@ -378,6 +413,14 @@ function initContactForm() {
       }
     });
   });
+  
+  // Add validation for checkboxes on change
+  const checkboxes = form.querySelectorAll('input[type="checkbox"]');
+  checkboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+      validateCheckbox(this);
+    });
+  });
 }
 
 /**
@@ -392,6 +435,8 @@ function validateForm(form) {
   const nameInput = form.querySelector('#name');
   const emailInput = form.querySelector('#email');
   const messageInput = form.querySelector('#message');
+  const privacyCheck = form.querySelector('#privacyCheck');
+  const termsCheck = form.querySelector('#termsCheck');
   
   // Validate name field
   if (!validateField(nameInput)) {
@@ -405,6 +450,16 @@ function validateForm(form) {
   
   // Validate message field
   if (!validateField(messageInput)) {
+    isValid = false;
+  }
+  
+  // Validate privacy checkbox
+  if (!validateCheckbox(privacyCheck)) {
+    isValid = false;
+  }
+  
+  // Validate terms checkbox
+  if (!validateCheckbox(termsCheck)) {
     isValid = false;
   }
   
@@ -441,6 +496,27 @@ function validateField(field) {
   // Field is valid
   field.classList.remove('is-invalid');
   field.classList.add('is-valid');
+  return true;
+}
+
+/**
+ * Validate checkbox field
+ * @param {HTMLInputElement} checkbox - The checkbox to validate
+ * @returns {boolean} - True if checkbox is checked, false otherwise
+ */
+function validateCheckbox(checkbox) {
+  if (!checkbox) return true;
+  
+  // Check if checkbox is required and not checked
+  if (checkbox.hasAttribute('required') && !checkbox.checked) {
+    checkbox.classList.add('is-invalid');
+    checkbox.classList.remove('is-valid');
+    return false;
+  }
+  
+  // Checkbox is valid
+  checkbox.classList.remove('is-invalid');
+  checkbox.classList.add('is-valid');
   return true;
 }
 

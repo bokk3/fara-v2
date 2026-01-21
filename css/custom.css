@@ -1194,6 +1194,19 @@ body {
   display: block;
 }
 
+.contact-section .form-check-input.is-invalid ~ .invalid-feedback {
+  display: block;
+}
+
+.contact-section .form-check-input.is-invalid {
+  border-color: #F56565;
+}
+
+.contact-section .form-check-input.is-invalid:focus {
+  border-color: #F56565;
+  box-shadow: 0 0 0 0.2rem rgba(245, 101, 101, 0.25);
+}
+
 /* Submit Button */
 .contact-section .btn-primary {
   background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);

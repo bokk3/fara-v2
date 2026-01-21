@@ -5,3 +5,6 @@
 /css/* /css/:splat 200
 /js/* /js/:splat 200
 /images/* /images/:splat 200
+
+# 404 page - catch all non-existent pages
+/* /404.html 404
