@@ -356,14 +356,21 @@ body {
   min-height: 100vh;
   display: flex;
   align-items: center;
-  background-image: url('../images/hero/hero-bg.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+  background-color: var(--text-dark); /* Fallback color */
   overflow: hidden;
   margin-top: -76px;
   padding-top: 76px;
+}
+
+/* Hero Video Background */
+.hero-video {
+  position: absolute;
+  top: -76px;
+  left: 0;
+  width: 100%;
+  height: calc(100% + 76px);
+  object-fit: cover;
+  z-index: 0;
 }
 
 /* Hero Overlay */
@@ -524,8 +531,9 @@ body {
 }
 
 @media (max-width: 767px) {
-  .hero-section {
-    background-attachment: scroll;
+  .hero-video {
+    /* Ensure video covers properly on mobile */
+    object-fit: cover;
   }
   
   .hero-content {

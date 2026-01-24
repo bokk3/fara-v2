@@ -1,110 +1,261 @@
-# Performance Optimization Documentation
+# Website Performance Optimization Guide
 
-## File Minification
+This document provides step-by-step instructions to optimize the Movetofit.be website based on PageSpeed Insights recommendations.
 
-This document describes the CSS and JavaScript minification process for the Coach Dance Website.
+## 1. Logo Image Optimization (Priority: HIGH)
 
-### Minification Results
+### Current Issue
+- File: `images/logo-text.png` 
+- Current size: 572 KB
+- Current dimensions: 765x191 pixels
+- Displayed at: 112x28 pixels (desktop) and smaller on mobile
+- **Estimated savings: 571.5 KB**
 
-The following files have been minified for production use:
+### Solution Steps
 
-#### CSS Files
-- **Original**: `css/custom.css` - 35.6 KB (2010 lines)
-- **Minified**: `css/custom.min.css` - 22.9 KB (1 line)
-- **Reduction**: 12.7 KB (35.6% smaller)
+#### Option A: Use Online Tools (Easiest)
+1. Go to https://squoosh.app/
+2. Upload `images/logo-text.png`
+3. Choose WebP format (right panel)
+4. Set quality to 85-90%
+5. Resize to 300x75 pixels (2x for retina displays)
+6. Download as `logo-text.webp`
+7. Upload to `images/` folder
 
-#### JavaScript Files
-- **Original**: `js/main.js` - 18.8 KB (629 lines)
-- **Minified**: `js/main.min.js` - 7.8 KB (1 line)
-- **Reduction**: 11.0 KB (58.6% smaller)
+#### Option B: Use ImageMagick (Command Line)
+```bash
+# Install ImageMagick first if needed
+# On Mac: brew install imagemagick
+# On Ubuntu: sudo apt-get install imagemagick
 
-#### Total Savings
-- **Combined reduction**: 23.7 KB (43.5% smaller)
-- **Page load improvement**: Faster initial page load and reduced bandwidth usage
+# Convert and optimize
+convert images/logo-text.png -resize 300x75 -quality 90 images/logo-text.webp
+```
 
-### How to Use Minified Files
+#### Option C: Use Photoshop/GIMP
+1. Open `images/logo-text.png`
+2. Image → Image Size → Set width to 300px (maintain aspect ratio)
+3. File → Export As → WebP
+4. Quality: 85-90%
+5. Save as `images/logo-text.webp`
 
-For **production deployment**, update the HTML file to use the minified versions:
+### Update HTML (All Pages)
+
+Replace in all HTML files:
+```html
+<!-- OLD -->
+<img src="images/logo-text.png" alt="Movetofit.be - Professionele Sportcoaching & Dansles" class="navbar-logo">
+
+<!-- NEW -->
+<picture>
+  <source srcset="images/logo-text.webp" type="image/webp">
+  <img src="images/logo-text.png" alt="Movetofit.be - Professionele Sportcoaching & Dansles" class="navbar-logo" width="180" height="45">
+</picture>
+```
+
+**Files to update:**
+- index.html
+- blog.html
+- blog-post.html
+- privacy.html
+- terms.html
+- 404.html
+
+---
+
+## 2. Render-Blocking CSS Optimization (Priority: MEDIUM)
+
+### Current Issue
+- Bootstrap CSS (27.5 KB) blocks rendering for 1,050ms
+- Bootstrap Icons (14.2 KB) blocks rendering for 900ms
+- Custom CSS (9.3 KB) blocks rendering for 150ms
+- **Total estimated savings: 1,610ms**
+
+### Solution: Inline Critical CSS
+
+#### Step 1: Extract Critical CSS
+The critical CSS is the minimal CSS needed for above-the-fold content. For this site, that's:
+- Navigation styles
+- Hero section styles
+- Basic typography
+
+#### Step 2: Defer Non-Critical CSS
+
+Update the `<head>` section in all HTML files:
 
 ```html
-<!-- Replace this: -->
-<link rel="stylesheet" href="css/custom.css">
-<script src="js/main.js"></script>
+<!-- Critical CSS (inline in <head>) -->
+<style>
+  /* Minimal critical styles - navigation and hero only */
+  body{margin:0;padding-top:76px;font-family:'Open Sans',sans-serif}
+  .navbar{background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.1);position:fixed;top:0;width:100%;z-index:1000;padding:1rem 0}
+  .navbar-logo{height:45px;width:auto;max-width:180px}
+  .hero-section{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;margin-top:-76px;padding-top:76px}
+  .hero-video{position:absolute;top:-76px;left:0;width:100%;height:calc(100% + 76px);object-fit:cover;z-index:0}
+  .hero-overlay{position:absolute;top:-76px;left:0;right:0;bottom:0;background:linear-gradient(135deg,rgba(254,95,85,.75) 0%,rgba(230,52,98,.75) 100%);z-index:1}
+  .hero-content{position:relative;z-index:2;color:#fff}
+</style>
 
-<!-- With this: -->
-<link rel="stylesheet" href="css/custom.min.css">
-<script src="js/main.min.js"></script>
+<!-- Defer non-critical CSS -->
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"></noscript>
+
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"></noscript>
+
+<link rel="preload" href="css/custom.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="css/custom.css"></noscript>
+
+<!-- Fallback script for older browsers -->
+<script>
+  !function(e){"use strict";var t=function(t,n,o){var i,r=e.document,a=r.createElement("link");if(n)i=n;else{var l=(r.body||r.getElementsByTagName("head")[0]).childNodes;i=l[l.length-1]}var d=r.styleSheets;a.rel="stylesheet",a.href=t,a.media="only x",function e(t){if(r.body)return t();setTimeout(function(){e(t)})}(function(){i.parentNode.insertBefore(a,n?i:i.nextSibling)});var f=function(e){for(var t=a.href,n=d.length;n--;)if(d[n].href===t)return e();setTimeout(function(){f(e)})};return a.addEventListener&&a.addEventListener("load",o),a.onloadcssdefined=f,f(o),a};"undefined"!=typeof exports?exports.loadCSS=t:e.loadCSS=t}("undefined"!=typeof global?global:this);
+</script>
 ```
 
-For **development**, continue using the original unminified files for easier debugging.
+---
 
-### Regenerating Minified Files
+## 3. Font Display Optimization (Priority: LOW)
 
-If you make changes to the CSS or JavaScript files, regenerate the minified versions using these commands:
+### Current Issue
+- Bootstrap Icons font blocks text rendering
+- **Estimated savings: 30ms**
 
-#### Minify CSS
+### Solution: Add font-display CSS
+
+Create or update `css/font-optimization.css`:
+
+```css
+/* Font display optimization */
+@font-face {
+  font-family: 'bootstrap-icons';
+  font-display: swap; /* Show fallback text immediately */
+}
+
+/* Preload critical fonts */
+body {
+  font-display: swap;
+}
+```
+
+Add to `<head>` before other stylesheets:
+```html
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.woff2" as="font" type="font/woff2" crossorigin>
+```
+
+---
+
+## 4. Additional Optimizations
+
+### A. Optimize Gallery Images
+
+All images in `images/gallery/` should be:
+- Converted to WebP format
+- Resized to max 800px width
+- Compressed to 80-85% quality
+
+**Batch conversion script:**
 ```bash
-npx clean-css-cli css/custom.css -o css/custom.min.css
+# Install ImageMagick first
+for file in images/gallery/*.jpg; do
+  convert "$file" -resize 800x800\> -quality 85 "${file%.jpg}.webp"
+done
 ```
 
-#### Minify JavaScript
+### B. Optimize About Image
+
 ```bash
-npx terser js/main.js -o js/main.min.js -c -m
+convert images/about/coach-photo.jpg -resize 600x600\> -quality 85 images/about/coach-photo.webp
 ```
 
-### Tools Used
+Update in `index.html`:
+```html
+<picture>
+  <source srcset="images/about/coach-photo.webp" type="image/webp">
+  <img src="images/about/coach-photo.jpg" alt="Fara Truyens - Professionele sportcoach" class="img-fluid rounded about-image">
+</picture>
+```
 
-- **clean-css-cli**: CSS minification tool that removes whitespace, comments, and optimizes CSS
-- **terser**: JavaScript minification tool that compresses and mangles code while preserving functionality
+### C. Lazy Load Images
 
-### Performance Impact
+Add `loading="lazy"` to all images except above-the-fold:
 
-The minified files provide the following benefits:
+```html
+<!-- Gallery images -->
+<img src="images/gallery/sport-coaching-1.jpg" loading="lazy" alt="...">
 
-1. **Reduced bandwidth**: 43.5% smaller file sizes mean less data transfer
-2. **Faster page loads**: Smaller files download and parse faster
-3. **Better mobile experience**: Reduced data usage for mobile users
-4. **Improved SEO**: Faster page loads contribute to better search rankings
+<!-- About image -->
+<img src="images/about/coach-photo.jpg" loading="lazy" alt="...">
+```
 
-### File Size Requirements
+### D. Video Optimization
 
-According to Requirement 9.2, CSS and JavaScript files should be minimized. The minified versions meet this requirement:
+Optimize `video/hero.mp4`:
+1. Use HandBrake or FFmpeg
+2. Target bitrate: 1-2 Mbps
+3. Resolution: 1920x1080 max
+4. Format: H.264 (MP4)
 
-- ✅ CSS file is reasonably sized at 22.9 KB
-- ✅ JavaScript file is reasonably sized at 7.8 KB
-- ✅ Combined size of 30.7 KB is well within acceptable limits for a static website
+**FFmpeg command:**
+```bash
+ffmpeg -i video/hero.mp4 -vcodec h264 -crf 28 -preset slow -vf scale=1920:-2 video/hero-optimized.mp4
+```
 
-### Notes
+---
 
-- The original unminified files are kept for development and maintenance
-- Both versions are included in the repository
-- The HTML file currently references the unminified versions for development
-- Update to minified versions before deploying to production
-- No build process is required - minification can be done manually when needed
+## 5. Implementation Priority
 
-### Image Optimization (Task 12.1)
+### Phase 1 (Immediate - Biggest Impact)
+1. ✅ Optimize logo image (571 KB savings)
+2. ✅ Add width/height to logo img tag
+3. ✅ Convert logo to WebP with picture element
 
-**Status**: Pending
+### Phase 2 (High Priority)
+4. ⏳ Defer render-blocking CSS (1,610ms savings)
+5. ⏳ Add critical inline CSS
+6. ⏳ Optimize gallery images
 
-Image optimization (Task 12.1) has been deferred. When ready to optimize images:
+### Phase 3 (Medium Priority)
+7. ⏳ Add lazy loading to images
+8. ⏳ Optimize about image
+9. ⏳ Add font-display: swap
 
-1. **Compress images** using tools like:
-   - TinyPNG (https://tinypng.com/)
-   - ImageOptim (Mac)
-   - Squoosh (https://squoosh.app/)
+### Phase 4 (Low Priority)
+10. ⏳ Optimize hero video
+11. ⏳ Add service worker for caching
+12. ⏳ Implement HTTP/2 server push
 
-2. **Target file sizes**:
-   - Regular images: < 500 KB
-   - Hero images: < 1 MB
+---
 
-3. **Convert to WebP** with JPEG fallback:
-   ```html
-   <picture>
-     <source srcset="image.webp" type="image/webp">
-     <img src="image.jpg" alt="Description">
-   </picture>
-   ```
+## 6. Testing After Changes
 
-4. **Ensure appropriate dimensions** - don't use oversized images
+After each optimization:
 
-Once images are added to the project, run them through optimization tools before deployment.
+1. **Test locally** - Ensure site still works
+2. **Run PageSpeed Insights** - https://pagespeed.web.dev/
+3. **Check mobile performance** - Test on actual devices
+4. **Validate HTML** - https://validator.w3.org/
+
+---
+
+## 7. Expected Results
+
+After implementing all optimizations:
+
+- **LCP (Largest Contentful Paint)**: < 2.5s (currently slower)
+- **FCP (First Contentful Paint)**: < 1.8s
+- **Total page size**: Reduced by ~600 KB
+- **PageSpeed Score**: 90+ (mobile and desktop)
+
+---
+
+## Need Help?
+
+If you need assistance with any of these optimizations:
+1. Logo optimization is the easiest and has the biggest impact - start there
+2. Use online tools like Squoosh.app for image conversion
+3. Test one change at a time to ensure nothing breaks
+4. Keep backups of original files before optimizing
+
+---
+
+**Last Updated:** January 2026
